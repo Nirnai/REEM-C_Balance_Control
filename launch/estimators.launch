@@ -1,0 +1,51 @@
+<launch>
+  <arg name="robot"  default="full_ft_hey5"/>          <!-- full, lower_body, foot, full_ft_hey5 -->
+  <arg name="gzpose" default="-x 0.0 -y 0.0 -z 0.85 -R 0.0 -P 0.0 -Y 0.0"/>
+  <arg name="gui" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <env name="GAZEBO_MODEL_PATH" value="$(find reemc_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+
+  <!-- start up world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="true"/>
+  </include>
+
+  <!-- spawn robot in simulation -->
+  <include file="$(find reemc_gazebo)/launch/reemc_spawn.launch">
+    <arg name="robot"  value="$(arg robot)"/>
+    <arg name="gzpose" value="$(arg gzpose)"/>
+  </include>
+
+  <!-- bring up robot -->
+  <include file="$(find reemc_bringup)/launch/reemc_bringup.launch">
+    <arg name="robot"  value="$(arg robot)"/>
+  </include>
+
+
+  <!-- start zmp estimator -->
+  <rosparam command="load" file="$(find reemc_balance_control)/config/balance_control.yaml"/>
+
+  <node name="balance_controller_spawner"
+        pkg="controller_manager" type="spawner" output="screen"
+        args="zmp_controller"/>
+
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find reemc_balance_control)/rviz/blance_control.rviz" />
+
+
+</launch>
+
+
+<!-- rosservice call /gazebo/apply_body_wrench "body_name: 'base_link'
+reference_frame: 'base_link'
+reference_point: {x: 0.0, y: 0.0, z: 0.0}
+wrench:
+  force: {x: 0.0, y: 150.0, z: 0.0}
+  torque: {x: 0.0, y: 0.0, z: 0.0}
+start_time: {secs: 0, nsecs: 0}
+duration: {secs: 5, nsecs: 0}" -->
+
+

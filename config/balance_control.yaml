@@ -1,0 +1,6 @@
+zmp_controller:
+    type: "reemc_balance_control/ZMPController"
+    left_ft_sensor: left_ankle_ft
+    right_ft_sensor: right_ankle_ft
+
+

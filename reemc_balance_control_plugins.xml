@@ -1,0 +1,34 @@
+<library path="lib/libreemc_balance_control">
+  <class name="reemc_balance_control/ZMPEstimator" type="reemc_balance_control::ZMPEstimator" base_class_type="controller_interface::ControllerBase">
+    <description>
+       The ZMPEstimator estimates the Zero Moment Point of the Reem-C robot.
+    </description>
+  </class>
+</library>
+
+
+<library path="lib/libreemc_balance_control">
+  <class name="reemc_balance_control/COMEstimator" type="reemc_balance_control::COMEstimator" base_class_type="controller_interface::ControllerBase">
+    <description>
+       The COMEstimator estimates the Center of Mass of the Reem-C robot.
+    </description>
+  </class>
+</library>
+
+
+<library path="lib/libreemc_balance_control">
+  <class name="reemc_balance_control/HipController" type="reemc_balance_control::HipController" base_class_type="controller_interface::ControllerBase">
+    <description>
+       The Hip Controller moves the hip in a sinosoidal fashion.
+    </description>
+  </class>
+</library>
+
+
+<library path="lib/libreemc_balance_control">
+  <class name="reemc_balance_control/ZMPController" type="reemc_balance_control::ZMPController" base_class_type="controller_interface::ControllerBase">
+    <description>
+       The ZMP Controller balances the reemc during purtubation.
+    </description>
+  </class>
+</library>
